@@ -4,83 +4,85 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-'use strict';
+"use strict";
 
-const { Contract } = require('fabric-contract-api');
+const { Contract } = require("fabric-contract-api");
 
 class FabCar extends Contract {
-
     async initLedger(ctx) {
-        console.info('============= START : Initialize Ledger ===========');
+        console.info("============= START : Initialize Ledger ===========");
         const cars = [
             {
-                color: 'blue',
-                make: 'Toyota',
-                model: 'Prius',
-                owner: 'Tomoko',
+                color: "blue",
+                make: "Toyota",
+                model: "Prius",
+                owner: "Tomoko",
             },
             {
-                color: 'red',
-                make: 'Ford',
-                model: 'Mustang',
-                owner: 'Brad',
+                color: "red",
+                make: "Ford",
+                model: "Mustang",
+                owner: "Brad",
             },
             {
-                color: 'green',
-                make: 'Hyundai',
-                model: 'Tucson',
-                owner: 'Jin Soo',
+                color: "green",
+                make: "Hyundai",
+                model: "Tucson",
+                owner: "Jin Soo",
             },
             {
-                color: 'yellow',
-                make: 'Volkswagen',
-                model: 'Passat',
-                owner: 'Max',
+                color: "yellow",
+                make: "Volkswagen",
+                model: "Passat",
+                owner: "Max",
             },
             {
-                color: 'black',
-                make: 'Tesla',
-                model: 'S',
-                owner: 'Adriana',
+                color: "black",
+                make: "Tesla",
+                model: "S",
+                owner: "Adriana",
             },
             {
-                color: 'purple',
-                make: 'Peugeot',
-                model: '205',
-                owner: 'Michel',
+                color: "purple",
+                make: "Peugeot",
+                model: "205",
+                owner: "Michel",
             },
             {
-                color: 'white',
-                make: 'Chery',
-                model: 'S22L',
-                owner: 'Aarav',
+                color: "white",
+                make: "Chery",
+                model: "S22L",
+                owner: "Aarav",
             },
             {
-                color: 'violet',
-                make: 'Fiat',
-                model: 'Punto',
-                owner: 'Pari',
+                color: "violet",
+                make: "Fiat",
+                model: "Punto",
+                owner: "Pari",
             },
             {
-                color: 'indigo',
-                make: 'Tata',
-                model: 'Nano',
-                owner: 'Valeria',
+                color: "indigo",
+                make: "Tata",
+                model: "Nano",
+                owner: "Valeria",
             },
             {
-                color: 'brown',
-                make: 'Holden',
-                model: 'Barina',
-                owner: 'Shotaro',
+                color: "brown",
+                make: "Holden",
+                model: "Barina",
+                owner: "Shotaro",
             },
         ];
 
         for (let i = 0; i < cars.length; i++) {
-            cars[i].docType = 'car';
-            await ctx.stub.putState('CAR' + i, Buffer.from(JSON.stringify(cars[i])));
-            console.info('Added <--> ', cars[i]);
+            cars[i].docType = "car";
+            await ctx.stub.putState(
+                "CAR" + i,
+                Buffer.from(JSON.stringify(cars[i]))
+            );
+            console.info("Added <--> ", cars[i]);
         }
-        console.info('============= END : Initialize Ledger ===========');
+        console.info("============= END : Initialize Ledger ===========");
     }
 
     async queryCar(ctx, carNumber) {
@@ -93,26 +95,29 @@ class FabCar extends Contract {
     }
 
     async createCar(ctx, carNumber, make, model, color, owner) {
-        console.info('============= START : Create Car ===========');
+        console.info("============= START : Create Car ===========");
 
         const car = {
             color,
-            docType: 'car',
+            docType: "car",
             make,
             model,
             owner,
         };
 
         await ctx.stub.putState(carNumber, Buffer.from(JSON.stringify(car)));
-        console.info('============= END : Create Car ===========');
+        console.info("============= END : Create Car ===========");
     }
 
     async queryAllCars(ctx) {
-        const startKey = '';
-        const endKey = '';
+        const startKey = "";
+        const endKey = "";
         const allResults = [];
-        for await (const {key, value} of ctx.stub.getStateByRange(startKey, endKey)) {
-            const strValue = Buffer.from(value).toString('utf8');
+        for await (const { key, value } of ctx.stub.getStateByRange(
+            startKey,
+            endKey
+        )) {
+            const strValue = Buffer.from(value).toString("utf8");
             let record;
             try {
                 record = JSON.parse(strValue);
@@ -127,7 +132,7 @@ class FabCar extends Contract {
     }
 
     async changeCarOwner(ctx, carNumber, newOwner) {
-        console.info('============= START : changeCarOwner ===========');
+        console.info("============= START : changeCarOwner ===========");
 
         const carAsBytes = await ctx.stub.getState(carNumber); // get the car from chaincode state
         if (!carAsBytes || carAsBytes.length === 0) {
@@ -137,9 +142,8 @@ class FabCar extends Contract {
         car.owner = newOwner;
 
         await ctx.stub.putState(carNumber, Buffer.from(JSON.stringify(car)));
-        console.info('============= END : changeCarOwner ===========');
+        console.info("============= END : changeCarOwner ===========");
     }
-
 }
 
 module.exports = FabCar;
