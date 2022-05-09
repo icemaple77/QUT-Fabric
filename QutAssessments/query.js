@@ -56,13 +56,9 @@ async function main() {
 
     // Evaluate the specified transaction.
 
-    const result = await contract.evaluateTransaction(
-      "readData",
-      "ImportantInfomation"
-    );
-    console.log(
-      `Transaction has been evaluated, result is: ${result.toString()}`
-    );
+    const result = await contract.evaluateTransaction("readMyAsset", "N001");
+
+    console.log(`Transaction has been evaluated, result is: ${result}`);
 
     // Disconnect from the gateway.
     await gateway.disconnect();

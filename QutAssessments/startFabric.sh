@@ -28,10 +28,9 @@ Total setup execution time : $(($(date +%s) - starttime)) secs ...
 Next, use the QUTAssessment applications to interact with the deployed QUTAssessment contract.
 
 
-  Start by changing into the "javascript" directory:
-    cd javascript
+  
 
-  Next, install all required packages:
+ Start  install all required packages:
     npm install
 
   Then run the following applications to enroll the admin user, and register a new user

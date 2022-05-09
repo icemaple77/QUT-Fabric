@@ -55,8 +55,12 @@ async function main() {
     const contract = network.getContract("qut");
 
     // Submit the specified transaction.
+    let ID = "N001";
+    let useaData = { name: "Michael", majay: "CS", Uint: "IFN711" };
+    let unitData = { name: "Ifn711", CRA: "somthing", grade: "7" };
+    let report = { name: "Michael", majay: "CS", Uint: "IFN711" };
 
-    await contract.submitTransaction("writeDate", "key1", "Hello Yena");
+    await contract.submitTransaction("createMyAsset", ID, useaData);
     console.log("Transaction has been submitted");
 
     // Disconnect from the gateway.
