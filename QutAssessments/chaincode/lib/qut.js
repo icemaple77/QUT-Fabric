@@ -94,14 +94,18 @@ class QUTAssessment extends Contract {
       await ctx.stub.putState(Report.ID, Buffer.from(JSON.stringify(Report)));
       console.info(`Asset ${Report.ID} initialized`);
     }
-    console.info("============= START : Initialize Ledger ===========");
-    // await ctx.stub.putState("n10837353", Buffer.from(JSON.stringify(asset)));
-    // return "success";
+    console.info("============= Success : Initialize Ledger ===========");
+  }
+  async myAssetExists(ctx, myAssetId) {
+    const buffer = await ctx.stub.getState(myAssetId);
+    return !!buffer && buffer.length > 0;
   }
   async createStudent(ctx, studentID, name, degree, major, Unitid) {
     const exists = await this.myAssetExists(ctx, studentID);
     if (exists) {
-      throw new Error(`The Student: ${studentID} already exists`);
+      return false;
+
+      //throw new Error(`The Student: ${studentID} already exists`);
     }
     const asset = {
       ID: studentID,
@@ -116,7 +120,8 @@ class QUTAssessment extends Contract {
   async createUnit(ctx, unitID, Assessment, Criteria, Achievement) {
     const exists = await this.myAssetExists(ctx, unitID);
     if (exists) {
-      throw new Error(`The Unit: ${unitID} already exists`);
+      return false;
+      //throw new Error(`The Unit: ${unitID} already exists`);
     }
     const asset = {
       ID: unitID,
@@ -131,7 +136,8 @@ class QUTAssessment extends Contract {
     const reportID = `${studentID}${unitID}`;
     const exists = await this.myAssetExists(ctx, reportID);
     if (exists) {
-      throw new Error(`The my asset ${reportID} already exists`);
+      return false;
+      //throw new Error(`The my asset ${reportID} already exists`);
     }
     const asset = {
       ID: reportID,
@@ -145,7 +151,8 @@ class QUTAssessment extends Contract {
     const reportID = `${studentID}${unitID}`;
     const exists = await this.myAssetExists(ctx, reportID);
     if (!exists) {
-      throw new Error(`The Report: ${reportID} does not exist`);
+      return false;
+      //throw new Error(`The Report: ${reportID} does not exist`);
     }
     const asset = Get(ctx, reportID);
     asset.state = "Approved";
@@ -154,18 +161,22 @@ class QUTAssessment extends Contract {
   }
 
   async Get(ctx, ID) {
+    console.log("============= Start : Search Ledger ===========");
     const exists = await this.myAssetExists(ctx, ID);
     if (!exists) {
-      throw new Error(`The my asset ${ID} does not exist`);
+      return false;
+      //throw new Error(`The my asset ${ID} does not exist`);
     }
     const buffer = await ctx.stub.getState(ID);
     const asset = JSON.parse(buffer.toString());
+    console.log("============= End : Search Ledger ===========");
     return asset;
   }
   async deleteMyAsset(ctx, ID) {
     const exists = await this.myAssetExists(ctx, ID);
     if (!exists) {
-      throw new Error(`The my asset ${ID} does not exist`);
+      return false;
+      //throw new Error(`The my asset ${ID} does not exist`);
     }
     await ctx.stub.deleteState(ID);
   }
