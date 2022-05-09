@@ -7,8 +7,8 @@
 "use strict";
 
 const { Gateway, Wallets } = require("fabric-network");
-const path = require("path");
 const fs = require("fs");
+const path = require("path");
 
 async function main() {
   try {
@@ -16,14 +16,14 @@ async function main() {
     const ccpPath = path.resolve(
       __dirname,
       "..",
-      "..",
+
       "test-network",
       "organizations",
       "peerOrganizations",
       "org1.example.com",
       "connection-org1.json"
     );
-    const ccp = JSON.parse(fs.readFileSync(ccpPath, "utf8"));
+    let ccp = JSON.parse(fs.readFileSync(ccpPath, "utf8"));
 
     // Create a new file system based wallet for managing identities.
     const walletPath = path.join(process.cwd(), "wallet");
@@ -54,18 +54,28 @@ async function main() {
     // Get the contract from the network.
     const contract = network.getContract("qut");
 
-    // Evaluate the specified transaction.
-    // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
-    // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
-    const result = await contract.evaluateTransaction("queryCar", "CAR12");
-    console.log(
-      `Transaction has been evaluated, result is: ${result.toString()}`
-    );
+    // Submit the specified transaction.
+    const studentID = "N10629297";
+    const unitID = "IFN666";
 
+    console.log("=============Start:update state ============");
+    const updateState = await contract.submitTransaction(
+      "updateState",
+      studentID,
+      unitID
+    );
+    //
+    if (updateState == "true")
+      console.log(
+        `update state ${studentID + "for" + unitID} has been submitted`
+      );
+    else
+      console.log(`The Student ${studentID + "for" + unitID} does not exist`);
+    console.log("=============END: update state ============");
     // Disconnect from the gateway.
     await gateway.disconnect();
   } catch (error) {
-    console.error(`Failed to evaluate transaction: ${error}`);
+    console.error(`Failed to submit transaction: ${error}`);
     process.exit(1);
   }
 }
