@@ -55,13 +55,36 @@ async function main() {
     const contract = network.getContract("qut");
 
     // Submit the specified transaction.
-    let ID = "N001";
-    let useaData = { name: "Michael", majay: "CS", Uint: "IFN711" };
-    let unitData = { name: "Ifn711", CRA: "somthing", grade: "7" };
-    let report = { name: "Michael", majay: "CS", Uint: "IFN711" };
+    const studentxyz = [
+      {
+        ID: "110",
+        Name: "110",
+        Degree: "110",
+        Major: "110",
+        UintID: ["IFN711", "IFN666"],
+      },
+    ];
+    const unitxyz = [
+      {
+        ID: "IFN711",
+        Assessment: ["Industry Project"],
+        Criteria: ["Introduction (10%)"],
+        Achievement: [
+          "Background of the Industry/partner and the problem/ opportunity proposed to be addressed is described precisely with comprehensive but succinct content; The anticipated results and outcomes are clearly stated, illustrating how they will impact diverse stakeholders.",
+        ],
+      },
+    ];
 
-    await contract.submitTransaction("createMyAsset", ID, useaData);
-    console.log("Transaction has been submitted");
+    const AddStudent = await contract.submitTransaction(
+      "createStudent",
+      "110",
+      studentxyz[0].Name,
+      studentxyz[0].Degree,
+      studentxyz[0].Major,
+      studentxyz[0].UintID
+    );
+    if (AddStudent) console.log("Transaction has been submitted");
+    else console.log("The Student id already existed");
 
     // Disconnect from the gateway.
     await gateway.disconnect();

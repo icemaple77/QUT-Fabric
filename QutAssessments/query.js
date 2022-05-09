@@ -56,7 +56,7 @@ async function main() {
 
     // Evaluate the specified transaction.
 
-    const studentID = "N10629297";
+    const studentID = "110";
     const unitID = "IFN711";
     // Query student
     const result1 = await contract.evaluateTransaction("Get", studentID);
