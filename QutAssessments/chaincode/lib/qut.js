@@ -154,17 +154,20 @@ class QUTAssessment extends Contract {
     }
   }
   async updateState(ctx, studentID, unitID) {
-    const reportID = `${studentID}${unitID}`;
-    const exists = await this.myAssetExists(ctx, reportID);
-    if (!exists) {
+    const reportID = `${studentID + unitID}`;
+    console.info("============= START : changeCarOwner ===========");
+
+    const reportAsBytes = await ctx.stub.getState(reportID);
+    if (!reportAsBytes || reportAsBytes.length === 0) {
       return false;
       //throw new Error(`The Report: ${reportID} does not exist`);
+    } else {
+      const report = JSON.parse(reportAsBytes.toString());
+      report.state = "Approved";
+      const buffer = Buffer.from(JSON.stringify(report));
+      await ctx.stub.putState(reportID, buffer);
+      return true;
     }
-    const asset = Get(ctx, reportID);
-    asset.state = "Approved";
-    const buffer = Buffer.from(JSON.stringify(asset));
-    await ctx.stub.putState(reportID, buffer);
-    return true;
   }
 
   async Get(ctx, ID) {

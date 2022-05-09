@@ -24,7 +24,7 @@ popd
 node ./enrollAdmin.js
 node ./registerUser.js
 
-popd
+
 
 cat <<EOF
 
@@ -32,26 +32,23 @@ Total setup execution time : $(($(date +%s) - starttime)) secs ...
 
 Next, use the QUTAssessment applications to interact with the deployed QUTAssessment contract.
 
-
-  
-
  Start  install all required packages:
     npm install
+   
+   You can run the invoke application as follows.
+      node invoke
 
-  Then run the following applications to enroll the admin user, and register a new user
-  called appUser which will be used by the other applications to interact with the deployed
-  QUTAssessment contract:
-    node enrollAdmin
-    node registerUser
+   You can run the query application as follows. 
+      node query
 
-  You can run the invoke application as follows.
-    node invoke
+   You can run the update application as follows. 
+      node update
+Good!!!The QUT Blockchain System is running successfully...
 
-  You can run the query application as follows. 
-    node query
+		*******************
+		*Congratulations!!*
+		*******************
 
-
-
-Congratulations!! The blockchain system works successfully...
+           Welcome to QUT Blockchain System
 
 EOF

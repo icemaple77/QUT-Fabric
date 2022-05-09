@@ -56,8 +56,8 @@ async function main() {
 
     // Evaluate the specified transaction.
 
-    const studentID = "110";
-    const unitID = "IFN711";
+    const studentID = "N10629297";
+    const unitID = "IFN666";
     // Query student
     const result1 = await contract.evaluateTransaction("Get", studentID);
     //Query unit
@@ -68,18 +68,18 @@ async function main() {
       studentID + unitID
     );
     //Query a unexist value .return false
-    const result4 = await contract.evaluateTransaction("Get", "1234");
-    console.log("====================search student======================");
-    console.log(`This student ${studentID} details is: ${result1}`);
-    console.log();
-    console.log("====================search unit======================");
-    console.log(`This unit ${unitID} details is: ${result2}`);
-    console.log();
+    // const result4 = await contract.evaluateTransaction("Get", "1234");
+    // console.log("====================search student======================");
+    // console.log(`This student ${studentID} details is: ${result1}`);
+    // console.log();
+    // console.log("====================search unit======================");
+    // console.log(`This unit ${unitID} details is: ${result2}`);
+    // console.log();
     console.log("====================search report======================");
     console.log(`This Report ${studentID + unitID} details is: ${result3}`);
     console.log();
-    console.log("====================search Nothing======================");
-    console.log(`This Report details is: ${result4}`);
+    // console.log("====================search Nothing======================");
+    // console.log(`This Report details is: ${result4}`);
 
     // Disconnect from the gateway.
     await gateway.disconnect();
