@@ -31,10 +31,10 @@ async function main() {
     console.log(`Wallet path: ${walletPath}`);
 
     // Check to see if we've already enrolled the user.
-    const identity = await wallet.get("appUser");
+    const identity = await wallet.get("appuser");
     if (!identity) {
       console.log(
-        'An identity for the user "appUser" does not exist in the wallet'
+        'An identity for the user "appuser" does not exist in the wallet'
       );
       console.log("Run the registerUser.js application before retrying");
       return;
@@ -44,7 +44,7 @@ async function main() {
     const gateway = new Gateway();
     await gateway.connect(ccp, {
       wallet,
-      identity: "appUser",
+      identity: "appuser",
       discovery: { enabled: true, asLocalhost: true },
     });
 
@@ -56,7 +56,7 @@ async function main() {
 
     // Evaluate the specified transaction.
 
-    const studentID = "N10629297";
+    const studentID = "N110120119";
     const unitID = "IFN666";
     // Query student
     const result1 = await contract.evaluateTransaction("Get", studentID);
@@ -69,15 +69,15 @@ async function main() {
     );
     //Query a unexist value .return false
     // const result4 = await contract.evaluateTransaction("Get", "1234");
-    // console.log("====================search student======================");
-    // console.log(`This student ${studentID} details is: ${result1}`);
+    console.log("====================search student======================");
+    console.log(`This student ${studentID} details is: ${result1}`);
     // console.log();
     // console.log("====================search unit======================");
     // console.log(`This unit ${unitID} details is: ${result2}`);
     // console.log();
-    console.log("====================search report======================");
-    console.log(`This Report ${studentID + unitID} details is: ${result3}`);
-    console.log();
+    // console.log("====================search report======================");
+    // console.log(`This Report ${studentID + unitID} details is: ${result3}`);
+    // console.log();
     // console.log("====================search Nothing======================");
     // console.log(`This Report details is: ${result4}`);
 

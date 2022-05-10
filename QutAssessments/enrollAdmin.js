@@ -39,16 +39,16 @@ async function main() {
     const wallet = await Wallets.newFileSystemWallet(walletPath);
     console.log(`Wallet path: ${walletPath}`);
 
-    // Check to see if we've already enrolled the admin user.
-    const identity = await wallet.get("admin");
+    // Check to see if we've already enrolled the Doris user.
+    const identity = await wallet.get("Doris");
     if (identity) {
       console.log(
-        'An identity for the admin user "admin" already exists in the wallet'
+        'An identity for the Doris user "Doris" already exists in the wallet'
       );
       return;
     }
 
-    // Enroll the admin user, and import the new identity into the wallet.
+    // Enroll the Doris user, and import the new identity into the wallet.
     const enrollment = await ca.enroll({
       enrollmentID: "admin",
       enrollmentSecret: "adminpw",
@@ -61,12 +61,12 @@ async function main() {
       mspId: "Org1MSP",
       type: "X.509",
     };
-    await wallet.put("admin", x509Identity);
+    await wallet.put("Doris", x509Identity);
     console.log(
-      'Successfully enrolled admin user "admin" and imported it into the wallet'
+      'Successfully enrolled Doris user "Doris" and imported it into the wallet'
     );
   } catch (error) {
-    console.error(`Failed to enroll admin user "admin": ${error}`);
+    console.error(`Failed to enroll Doris user "Doris": ${error}`);
     process.exit(1);
   }
 }
